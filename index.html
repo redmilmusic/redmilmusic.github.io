@@ -9,18 +9,28 @@
     <meta name="description" content="Pàgina oficial de redmil, artista i productor de l'escena urbana catalana. Explora la seva música, la seva història i posa't en contacte per a col·laboracions.">
     <meta name="keywords" content="redmil, música urbana, rap català, productor musical, Emili Félix Coll, contacte redmil, newsletter música">
     
+    <!-- Google Analytics Global Site Tag (gtag.js) AMB EL TEU ID REAL -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5JT38MNFXR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5JT38MNFXR');
+    </script>
+
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link favicon href="assets/profile.jpg" type="image/x-icon" rel="shortcut icon">
+    <link rel="icon" href="assets/profile.jpg" type="image/jpeg">
 
     <!-- Stylesheet Únic -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
 
     <!-- Preloader amb Efecte d'Escriptura -->
     <div id="preloader">
@@ -56,14 +66,15 @@
                     <br>
                     <p class="newsletter-prompt">Vols accés exclusiu? 
                         <br>
-                        <a href="https://redmil.substack.com/embed" target="_blank">Uneix-te a la newsletter</a>
+                        <a href="https://redmil.substack.com/embed" target="_blank"
+                           data-analytics-event="newsletter_signup_click" data-analytics-source="hero_prompt">Uneix-te a la newsletter</a>
                     </p>
                     <div class="social-links">
-                        <a href="https://instagram.com/redmil___" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://tiktok.com/@redmil_" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://open.spotify.com/artist/4VHSspw4u7W3AvqOzu3hWj" target="_blank" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
-                        <a href="https://music.apple.com/es/artist/redmil/1739436312" target="_blank" aria-label="Apple Music"><i class="fab fa-apple"></i></a>
-                        <a href="https://www.youtube.com/@redmil_official" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://instagram.com/redmil___" target="_blank" aria-label="Instagram" data-analytics-event="social_link_click" data-analytics-platform="instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://tiktok.com/@redmil_" target="_blank" aria-label="TikTok" data-analytics-event="social_link_click" data-analytics-platform="tiktok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://open.spotify.com/artist/4VHSspw4u7W3AvqOzu3hWj" target="_blank" aria-label="Spotify" data-analytics-event="social_link_click" data-analytics-platform="spotify"><i class="fab fa-spotify"></i></a>
+                        <a href="https://music.apple.com/es/artist/redmil/1739436312" target="_blank" aria-label="Apple Music" data-analytics-event="social_link_click" data-analytics-platform="apple_music"><i class="fab fa-apple"></i></a>
+                        <a href="https://www.youtube.com/@redmil_official" target="_blank" aria-label="YouTube" data-analytics-event="social_link_click" data-analytics-platform="youtube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -94,24 +105,15 @@
         <section id="cta-divider-1" class="cta-divider reveal">
             <div class="image-marquee" aria-hidden="true">
                 <div class="marquee-track">
-                    <!-- Les teves 5 imatges -->
-                    <img src="assets/carabina.jpg" alt="">
-                    <img src="assets/parem-temps.jpg" alt="">
-                    <img src="assets/com-carai.jpg" alt="">
-                    <img src="assets/cima.jpg" alt="">
-                    <img src="assets/vampirs.jpg" alt="">
-                    <!-- Duplicat de les 5 imatges per a un bucle perfecte -->
-                    <img src="assets/carabina.jpg" alt="">
-                    <img src="assets/parem-temps.jpg" alt="">
-                    <img src="assets/com-carai.jpg" alt="">
-                    <img src="assets/cima.jpg" alt="">
-                    <img src="assets/vampirs.jpg" alt="">
+                    <img src="assets/carabina.jpg" alt=""><img src="assets/parem-temps.jpg" alt=""><img src="assets/com-carai.jpg" alt=""><img src="assets/cima.jpg" alt=""><img src="assets/vampirs.jpg" alt="">
+                    <img src="assets/carabina.jpg" alt=""><img src="assets/parem-temps.jpg" alt=""><img src="assets/com-carai.jpg" alt=""><img src="assets/cima.jpg" alt=""><img src="assets/vampirs.jpg" alt="">
                 </div>
             </div>
             <div class="container" data-anim="fade-in-up">
                 <h3>Forma part del procés</h3>
                 <p>Subscriu-te i entra dins l'estudi. <br> Coneix les lletres abans que surtin i descobreix contingut que no veuràs enlloc més.</p>
-                <a href="https://redmil.substack.com/embed" target="_blank" class="cta-button">Vull accés exclusiu <i class="fas fa-key"></i></a>
+                <a href="https://redmil.substack.com/embed" target="_blank" class="cta-button"
+                   data-analytics-event="newsletter_signup_click" data-analytics-source="cta_divider">Vull accés exclusiu <i class="fas fa-key"></i></a>
             </div>
         </section>
 
@@ -122,32 +124,36 @@
                 <div class="music-section" data-anim="fade-in-up" data-delay="100">
                     <h3 class="section-subtitle">Artista a Spotify</h3>
                     <div class="music-grid">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/4VHSspw4u7W3AvqOzu3hWj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/4VHSspw4u7W3AvqOzu3hWj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
+                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="main_artist_player"></iframe>
                     </div>
                 </div>
                 <div class="music-section" data-anim="fade-in-up" data-delay="200">
                     <h3 class="section-subtitle">Més Populars</h3>
                     <div class="music-grid">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2unhK6F6lC58LnKqCuLy8A?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4bk4YJD8NmPTJmzZKjQZrr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4EhyDs12DYTYHHIR7P6Xx6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2unhK6F6lC58LnKqCuLy8A?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
+                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_1"></iframe>
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4bk4YJD8NmPTJmzZKjQZrr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
+                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_2"></iframe>
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4EhyDs12DYTYHHIR7P6Xx6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
+                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_3"></iframe>
                     </div>
                 </div>
             </div>
-            <a href="#newsletter-cta" class="scroll-down" aria-label="Anar a Newsletter">
+            <a href="#contact" class="scroll-down" aria-label="Anar a Contacte">
                 <i class="fas fa-chevron-down"></i>
             </a>
         </section>
 
-
         <!-- SECCIÓ 4: CONTACTE  -->
-        <section id="contact" class="reveal">
-            <div class="container">
+        <section id="contact">
+            <div class="container reveal">
                 <div class="contact-content">
                     <h2 data-anim="fade-in-up">Parlem?</h2>
                     <p class="contact-intro" data-anim="fade-in-up">Per a col·laboracions, produccions o qualsevol consulta, aquest és el lloc. Estic obert a nous projectes i sempre busco connectar amb altres ments creatives.</p>
                     <div class="contact-main-link" data-anim="zoom-in" data-delay="200">
-                        <a href="mailto:emiliprods@gmail.com?subject=Col·laboració%20Musical" class="contact-email-button">
+                        <a href="mailto:emiliprods@gmail.com?subject=Col·laboració%20Musical" class="contact-email-button"
+                           data-analytics-event="contact_email_click">
                            <i class="fas fa-envelope"></i> Envia'm un correu
                         </a>
                         <p>emiliprods@gmail.com</p>
@@ -155,11 +161,11 @@
                     <div class="contact-footer" data-anim="fade-in-up" data-delay="300">
                         <p>També em trobaràs a les xarxes socials:</p>
                         <div class="social-links">
-                        <a href="https://instagram.com/redmil___" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://tiktok.com/@redmil_" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://open.spotify.com/artist/4VHSspw4u7W3AvqOzu3hWj" target="_blank" aria-label="Spotify"><i class="fab fa-spotify"></i></a>
-                        <a href="https://music.apple.com/es/artist/redmil/1739436312" target="_blank" aria-label="Apple Music"><i class="fab fa-apple"></i></a>
-                        <a href="https://www.youtube.com/@redmil_official" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://instagram.com/redmil___" target="_blank" aria-label="Instagram" data-analytics-event="social_link_click" data-analytics-platform="instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://tiktok.com/@redmil_" target="_blank" aria-label="TikTok" data-analytics-event="social_link_click" data-analytics-platform="tiktok"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://open.spotify.com/artist/4VHSspw4u7W3AvqOzu3hWj" target="_blank" aria-label="Spotify" data-analytics-event="social_link_click" data-analytics-platform="spotify"><i class="fab fa-spotify"></i></a>
+                            <a href="https://music.apple.com/es/artist/redmil/1739436312" target="_blank" aria-label="Apple Music" data-analytics-event="social_link_click" data-analytics-platform="apple_music"><i class="fab fa-apple"></i></a>
+                            <a href="https://www.youtube.com/@redmil_official" target="_blank" aria-label="YouTube" data-analytics-event="social_link_click" data-analytics-platform="youtube"><i class="fab fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
@@ -171,10 +177,10 @@
     <footer>
         <div class="container">
             <p>© 2025 redmil Records. Tots els drets reservats.</p>
-            <p class="footer-newsletter-link">No et quedis enrere. <a href="https://redmil.substack.com/embed" target="_blank">Subscriu-te</a>.</p>
+            <p class="footer-newsletter-link">No et quedis enrere. <a href="https://redmil.substack.com/embed" target="_blank"
+                data-analytics-event="newsletter_signup_click" data-analytics-source="footer_link">Subscriu-te</a>.</p>
         </div>
     </footer>
-
     
     <!-- Àudio de Fons -->
     <audio id="background-music" src="assets/musica.mp3" loop></audio>
@@ -192,7 +198,8 @@
             <i class="fas fa-envelope-open-text popup-icon"></i>
             <h3>No et perdis res</h3>
             <p>Vols ser el primer en assabentar-te de nous temes i notícies? Subscriu-te a la newsletter.</p>
-            <a href="https://redmil.substack.com/embed" target="_blank" id="popup-cta-button" class="cta-button">
+            <a href="https://redmil.substack.com/embed" target="_blank" id="popup-cta-button" class="cta-button"
+               data-analytics-event="newsletter_signup_click" data-analytics-source="popup">
                 Anar a la Newsletter
             </a>
         </div>
