@@ -74,13 +74,12 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .about-content { display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; }
 .about-text { flex: 1.5; min-width: 300px; }
 .about-text h2 { text-align: left; }
-/* ===== CANVI AQUÍ: Text justificat ===== */
 .about-text p {
     font-family: var(--font-body);
     color: #ccc;
     line-height: 1.8;
     margin-bottom: 1rem;
-    text-align: justify; /* Fa que el text s'alineï a ambdós costats */
+    text-align: justify;
 }
 .about-image { flex: 1; max-width: 350px; }
 .about-image img { width: 100%; border-radius: 12px; }
@@ -264,7 +263,7 @@ footer {
     cursor: pointer;
     z-index: 998;
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.3s ease;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.3s ease, color 0.3s ease;
 }
 
 #scroll-to-top {
@@ -295,11 +294,22 @@ footer {
     font-size: 1.2rem;
     border: 1px solid #333;
 }
-#toggle-music-btn:hover {
+/* ===== CANVI AQUÍ: El hover vermell només s'aplica si NO està silenciat ===== */
+#toggle-music-btn:not(.is-muted):hover {
     background-color: var(--gold-urban);
     color: var(--black-deep);
     transform: scale(1.1);
 }
+/* ===== CANVI AQUÍ: Nova classe per a l'estat silenciat ===== */
+#toggle-music-btn.is-muted {
+    background-color: #bbbbbb; /* Fons gris clar per a contrast */
+    color: var(--black-deep); /* Icona en negre */
+}
+#toggle-music-btn.is-muted:hover {
+    background-color: var(--white-pure); /* Es fa més clar al passar el cursor */
+    transform: scale(1.1);
+}
+
 
 /* =================================
    9. RESPONSIVE & MOBILE
