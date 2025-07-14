@@ -29,14 +29,6 @@ section {
     padding: 5rem 2rem;
 }
 
-/* ===== CANVI: S'ajusta l'alçada de les seccions de contingut ===== */
-#music, #contact {
-    min-height: auto;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-}
-
-
 /* =================================
    3. PRELOADER Y ANIMACIONES
    ================================= */
@@ -298,15 +290,17 @@ footer {
 @media (max-width: 768px) {
     h2 { font-size: 2.2rem; }
     h3 { font-size: 1.8rem; }
-    section { padding: 4rem 1rem; } 
-    #preloader-text { font-size: 1rem; }
     
     .cursor-dot, .cursor-outline { display: none; }
 
-    #hero {
-        padding-top: 7rem; 
-        padding-bottom: 6rem;
+    #hero { padding: 7rem 1rem 6rem; }
+    
+    /* ===== CORRECCIÓ FINAL: Eliminar l'alçada mínima en seccions de contingut en mòbil ===== */
+    #about, #music, #contact, .cta-divider {
+        min-height: auto; /* Anul·la el 100vh general */
+        padding: 6rem 1rem;
     }
+    
     .hero-content {
         flex-direction: column;
         align-items: center;
