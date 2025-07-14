@@ -29,6 +29,14 @@ section {
     padding: 5rem 2rem;
 }
 
+/* ===== CANVI: S'ajusta l'alçada de les seccions de contingut ===== */
+#music, #contact {
+    min-height: auto;
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}
+
+
 /* =================================
    3. PRELOADER Y ANIMACIONES
    ================================= */
@@ -113,28 +121,9 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .section-subtitle { font-family: var(--font-header); font-size: 1.8rem; color: var(--gold-urban); margin-bottom: 2rem; text-align: center; }
 .music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 
-/* =================================
-   5. SECCIÓ CONTACTE (REDISSENYADA)
-   ================================= */
-#contact { 
-    background: linear-gradient(340deg, var(--black-deep) 0%, #111111 100%);
-    border-top: 1px solid #2a2a2a;
-}
-.contact-content {
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-}
-#contact h2 { 
-    color: var(--gold-urban);
-    margin-bottom: 1.5rem;
-}
-.contact-intro { 
-    color: #ccc; 
-    line-height: 1.7; 
-    margin-bottom: 3.5rem; 
-    font-size: 1.1rem;
-}
+#contact .contact-content { max-width: 700px; margin: 0 auto; text-align: center; }
+#contact h2 { color: var(--gold-urban); margin-bottom: 1.5rem; }
+.contact-intro { color: #ccc; line-height: 1.7; margin-bottom: 3.5rem; font-size: 1.1rem; }
 .contact-main-link {
     background: var(--charcoal-grey);
     border: 1px solid #2a2a2a;
@@ -161,30 +150,12 @@ nav { display: flex; justify-content: space-between; align-items: center; }
     font-family: var(--font-header);
     font-size: 1.2rem;
 }
-.contact-email-button:hover {
-    transform: scale(1.05);
-}
-.contact-main-link p {
-    margin-top: 1.5rem;
-    color: #888;
-    font-family: var(--font-body);
-}
-.contact-footer p {
-    color: #aaa;
-    margin-bottom: 1.5rem;
-}
-.contact-footer .social-links {
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 0;
-}
-.contact-footer .social-links a {
-    font-size: 1.8rem;
-}
+.contact-email-button:hover { transform: scale(1.05); }
+.contact-main-link p { margin-top: 1.5rem; color: #888; font-family: var(--font-body); }
+.contact-footer p { color: #aaa; margin-bottom: 1.5rem; }
+.contact-footer .social-links { justify-content: center; gap: 2rem; margin-top: 0; }
+.contact-footer .social-links a { font-size: 1.8rem; }
 
-/* =================================
-   6. CTAS Y POPUP
-   ================================= */
 .cta-divider {
     min-height: auto;
     background-color: var(--charcoal-grey);
@@ -234,10 +205,7 @@ nav { display: flex; justify-content: space-between; align-items: center; }
     opacity: 0.2;
     filter: grayscale(80%);
 }
-.cta-divider .container {
-    position: relative;
-    z-index: 3;
-}
+.cta-divider .container { position: relative; z-index: 3; }
 @keyframes scroll-left {
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-250px * 5)); }
@@ -253,9 +221,6 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .close-popup { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #888; font-size: 2rem; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; }
 .close-popup:hover { color: var(--white-pure); transform: scale(1.1); }
 
-/* =================================
-   7. FOOTER
-   ================================= */
 footer {
     background-color: #050505;
     padding: 3rem 2rem;
@@ -267,9 +232,6 @@ footer {
 .footer-newsletter-link a { color: #ccc; text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s ease; }
 .footer-newsletter-link a:hover { color: var(--gold-urban); }
 
-/* =================================
-   8. BOTONS FIXES (TORNAR AMUNT I MÚSICA)
-   ================================= */
 #scroll-to-top, #toggle-music-btn {
     position: fixed;
     border: none;
@@ -327,9 +289,6 @@ footer {
     transform: scale(1.1);
 }
 
-/* =================================
-   9. RESPONSIVE & MOBILE
-   ================================= */
 .hamburger { display: none; cursor: pointer; }
 .hamburger div { width: 25px; height: 3px; background-color: var(--white-pure); margin: 5px; transition: all 0.3s ease; }
 .hamburger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
@@ -372,13 +331,8 @@ footer {
         font-size: 1rem;
         margin-bottom: 1.5rem;
     }
-    .newsletter-prompt {
-        margin-top: 1rem;
-    }
-    .social-links { 
-        justify-content: center; 
-        margin-top: 1.5rem; 
-    }
+    .newsletter-prompt { margin-top: 1rem; }
+    .social-links { justify-content: center; margin-top: 1.5rem; }
 
     .about-content { flex-direction: column; text-align: center; gap: 2.5rem; }
     .about-text h2 { text-align: center; }

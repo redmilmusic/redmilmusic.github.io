@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funció per configurar tots els listeners de tracking
     function initAnalyticsTracking() {
-        // Trackejar clics en enllaços amb 'data-analytics-event'
         document.body.addEventListener('click', (event) => {
             const target = event.target.closest('[data-analytics-event]');
             if (!target) return;
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             trackEvent(eventName, params);
         });
 
-        // Trackejar interacció amb els reproductors de Spotify (un sol cop per iframe)
         document.querySelectorAll('[data-analytics-event="spotify_embed_interaction"]').forEach(iframe => {
             let tracked = false;
             const trackSpotify = () => {
@@ -153,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateButtonState();
     }
 
-    // ===== CORRECCIÓ: Selector arreglat per evitar error =====
+    // ===== CORRECCIÓ: Selector arreglat per evitar error fatal =====
     function initScrollAnimations() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
