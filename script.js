@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateButtonState();
     }
 
-    // ===== CORRECCIÓ: Selector arreglat per evitar error fatal =====
+    // Lògica d'Animacions en fer Scroll
     function initScrollAnimations() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, { threshold: 0.5 });
-        // El selector correcte ha d'apuntar només als elements que tenen la classe 'reveal'
+        // CORRECCIÓ FINAL: El selector només ha d'observar elements amb la classe .reveal
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
