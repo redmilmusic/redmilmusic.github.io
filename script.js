@@ -11,7 +11,54 @@ document.addEventListener('DOMContentLoaded', () => {
         initNewsletterPopup();
         setupMusicToggle();
         initAnalyticsTracking();
+        initSpotifyWidgets(); // <-- NOVA FUNCIÓ PER ALS WIDGETS DE SPOTIFY
     }
+
+    // ===== NOU: Lògica per a la càrrega robusta dels widgets de Spotify =====
+    function initSpotifyWidgets() {
+        const spotifyWidgets = document.querySelectorAll('.spotify-widget-wrapper');
+        
+        if ('IntersectionObserver' in window) {
+            const widgetObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const wrapper = entry.target;
+                        const iframe = wrapper.querySelector('iframe');
+                        
+                        if (iframe && !iframe.src) {
+                            iframe.src = iframe.dataset.src;
+
+                            // Gestionar la càrrega correcta
+                            iframe.onload = () => {
+                                wrapper.classList.add('is-loaded');
+                                clearTimeout(fallbackTimeout);
+                            };
+                            
+                            // Gestionar el cas d'error amb un temporitzador
+                            const fallbackTimeout = setTimeout(() => {
+                                if (!wrapper.classList.contains('is-loaded')) {
+                                    wrapper.classList.add('has-failed');
+                                }
+                            }, 15000); // 15 segons d'espera
+                        }
+                        observer.unobserve(wrapper);
+                    }
+                });
+            }, { rootMargin: "50px" });
+
+            spotifyWidgets.forEach(widget => widgetObserver.observe(widget));
+        } else {
+            // Fallback per a navegadors molt antics: carregar tot directament
+            spotifyWidgets.forEach(wrapper => {
+                const iframe = wrapper.querySelector('iframe');
+                if (iframe) {
+                    iframe.src = iframe.dataset.src;
+                    wrapper.classList.add('is-loaded');
+                }
+            });
+        }
+    }
+
 
     // Funció central per enviar esdeveniments a Google Analytics
     function trackEvent(eventName, params = {}) {
@@ -38,23 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             trackEvent(eventName, params);
-        });
-
-        document.querySelectorAll('[data-analytics-event="spotify_embed_interaction"]').forEach(iframe => {
-            let tracked = false;
-            const trackSpotify = () => {
-                if (tracked) return;
-                tracked = true;
-                trackEvent('spotify_embed_interaction', {
-                    embed_type: iframe.dataset.analyticsEmbedType || 'unknown'
-                });
-            };
-            iframe.addEventListener('focus', trackSpotify);
-            window.addEventListener('blur', () => {
-                if (document.activeElement === iframe) {
-                    trackSpotify();
-                }
-            });
         });
     }
 
@@ -153,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lògica d'Animacions en fer Scroll
     function initScrollAnimations() {
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const sectionId = entry.target.id;
@@ -166,8 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
-        // CORRECCIÓ FINAL: El selector només ha d'observar elements amb la classe .reveal
+        }, { threshold: 0.1 }); // Llindar més baix per a animacions generals
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 

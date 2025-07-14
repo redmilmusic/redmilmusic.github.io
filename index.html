@@ -126,19 +126,36 @@
                 <div class="music-section" data-anim="fade-in-up" data-delay="100">
                     <h3 class="section-subtitle">Artista a Spotify</h3>
                     <div class="music-grid">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/4VHSspw4u7W3AvqOzu3hWj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
-                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="main_artist_player"></iframe>
+                        <!-- ===== CANVI: Estructura del Widget de Spotify millorada ===== -->
+                        <div class="spotify-widget-wrapper">
+                            <div class="spotify-loader"></div>
+                            <div class="spotify-fallback">No s'ha pogut carregar el reproductor. <a href="https://open.spotify.com/artist/4VHSspw4u7W3AvqOzu3hWj" target="_blank">Obrir a Spotify</a></div>
+                            <iframe style="border-radius:12px" data-src="https://open.spotify.com/embed/artist/4VHSspw4u7W3AvqOzu3hWj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="main_artist_player"></iframe>
+                        </div>
                     </div>
                 </div>
                 <div class="music-section" data-anim="fade-in-up" data-delay="200">
                     <h3 class="section-subtitle">Més Populars</h3>
                     <div class="music-grid">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2unhK6F6lC58LnKqCuLy8A?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
-                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_1"></iframe>
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4bk4YJD8NmPTJmzZKjQZrr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
-                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_2"></iframe>
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4EhyDs12DYTYHHIR7P6Xx6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
-                                data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_3"></iframe>
+                         <div class="spotify-widget-wrapper">
+                            <div class="spotify-loader"></div>
+                            <div class="spotify-fallback">No s'ha pogut carregar el reproductor. <a href="https://open.spotify.com/track/2unhK6F6lC58LnKqCuLy8A" target="_blank">Obrir a Spotify</a></div>
+                            <iframe style="border-radius:12px" data-src="https://open.spotify.com/embed/track/2unhK6F6lC58LnKqCuLy8A?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_1"></iframe>
+                        </div>
+                        <div class="spotify-widget-wrapper">
+                            <div class="spotify-loader"></div>
+                            <div class="spotify-fallback">No s'ha pogut carregar el reproductor. <a href="https://open.spotify.com/track/4bk4YJD8NmPTJmzZKjQZrr" target="_blank">Obrir a Spotify</a></div>
+                            <iframe style="border-radius:12px" data-src="https://open.spotify.com/embed/track/4bk4YJD8NmPTJmzZKjQZrr?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_2"></iframe>
+                        </div>
+                        <div class="spotify-widget-wrapper">
+                             <div class="spotify-loader"></div>
+                            <div class="spotify-fallback">No s'ha pogut carregar el reproductor. <a href="https://open.spotify.com/track/4EhyDs12DYTYHHIR7P6Xx6" target="_blank">Obrir a Spotify</a></div>
+                            <iframe style="border-radius:12px" data-src="https://open.spotify.com/embed/track/4EhyDs12DYTYHHIR7P6Xx6?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    data-analytics-event="spotify_embed_interaction" data-analytics-embed-type="top_track_3"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>

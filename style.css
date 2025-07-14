@@ -109,6 +109,58 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .about-image { flex: 1; max-width: 350px; }
 .about-image img { width: 100%; border-radius: 12px; }
 
+/* ===== NOU: Estils per als widgets de Spotify ===== */
+.spotify-widget-wrapper {
+    position: relative;
+    min-height: 352px;
+    background-color: var(--charcoal-grey);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.spotify-widget-wrapper iframe {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.spotify-widget-wrapper.is-loaded iframe {
+    opacity: 1;
+}
+.spotify-loader {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #333;
+    border-top-color: var(--gold-urban);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transition: opacity 0.3s ease;
+}
+.spotify-widget-wrapper.is-loaded .spotify-loader,
+.spotify-widget-wrapper.has-failed .spotify-loader {
+    opacity: 0;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.spotify-fallback {
+    position: absolute;
+    display: none;
+    color: #aaa;
+    text-align: center;
+    padding: 1rem;
+}
+.spotify-fallback a {
+    color: var(--white-pure);
+    text-decoration: underline;
+}
+.spotify-widget-wrapper.has-failed .spotify-fallback {
+    display: block;
+}
+/* ===== Fi dels estils de Spotify ===== */
+
+
 .music-section { margin-bottom: 2rem; width: 100%; }
 .section-subtitle { font-family: var(--font-header); font-size: 1.8rem; color: var(--gold-urban); margin-bottom: 2rem; text-align: center; }
 .music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
@@ -297,7 +349,7 @@ footer {
     
     /* ===== CORRECCIÓ FINAL: Eliminar l'alçada mínima en seccions de contingut en mòbil ===== */
     #about, #music, #contact, .cta-divider {
-        min-height: auto; /* Anul·la el 100vh general */
+        min-height: auto;
         padding: 6rem 1rem;
     }
     
