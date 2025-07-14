@@ -1,266 +1,351 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* =================================
+   1. VARIABLES & ESTILOS GENERALES
+   ================================= */
+:root {
+    --black-deep: #000000;
+    --charcoal-grey: #1A1A1A;
+    --white-pure: #FFFFFF;
+    --gold-urban: #c93333; /* Color principal actualitzat a vermell */
+    --font-header: 'Poppins', sans-serif;
+    --font-body: 'helvetica', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background-color: var(--black-deep); color: var(--white-pure); overflow-x: hidden; }
+.container { width: 90%; max-width: 1100px; margin: 0 auto; }
+h2 { font-family: var(--font-header); font-size: 2.8rem; text-align: center; margin-bottom: 3rem; color: var(--white-pure); font-weight: 700; }
+h3 { font-family: var(--font-header); font-size: 2.2rem; color: var(--white-pure); }
 
-    // Funció principal que inicialitza tot
-    function init() {
-        runPreloader();
-        setupMobileNav();
-        initScrollAnimations();
-        initReactiveHeader();
-        initCustomCursor();
-        initScrollToTopButton();
-        initNewsletterPopup();
-        setupMusicToggle();
-        initAnalyticsTracking();
-    }
+/* =================================
+   2. DISEÑO A PANTALLA COMPLETA
+   ================================= */
+section {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 2rem;
+}
 
-    // Funció central per enviar esdeveniments a Google Analytics
-    function trackEvent(eventName, params = {}) {
-        if (typeof gtag === 'function') {
-            gtag('event', eventName, params);
-        } else {
-            console.warn('Google Analytics (gtag.js) no trobat. El tracking està desactivat.');
-        }
-    }
+/* =================================
+   3. PRELOADER Y ANIMACIONES
+   ================================= */
+#preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black-deep); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease-out; }
+#preloader-text { font-family: var(--font-mono); font-size: 1.5rem; color: var(--white-pure); text-align: center; }
+.preloader-cursor { color: var(--white-pure); animation: blink .75s step-end infinite; }
+@keyframes blink { from, to { opacity: 1 } 50% { opacity: 0 } }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
 
-    // Funció per configurar tots els listeners de tracking
-    function initAnalyticsTracking() {
-        document.body.addEventListener('click', (event) => {
-            const target = event.target.closest('[data-analytics-event]');
-            if (!target) return;
+/* =================================
+   4. COMPONENTES PRINCIPALES
+   ================================= */
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+}
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--gold-urban);
+}
+.cursor-outline {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--gold-urban);
+    transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
+}
+.cursor-outline.grow {
+    width: 50px;
+    height: 50px;
+}
 
-            const eventName = target.dataset.analyticsEvent;
-            const params = {};
+header { position: fixed; width: 100%; top: 0; left: 0; z-index: 1000; padding: 1.5rem 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); }
+nav { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: var(--font-header); font-size: 1.8rem; font-weight: 900; color: var(--white-pure); text-decoration: none; text-transform: lowercase; }
+.nav-links { display: flex; list-style: none; gap: 2rem; }
+.nav-links a { color: var(--white-pure); text-decoration: none; font-size: 1rem; position: relative; padding-bottom: 5px; }
+.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background-color: var(--gold-urban); transition: width 0.3s ease-out; }
+.nav-links a:hover::after { width: 100%; }
 
-            for (const key in target.dataset) {
-                if (key.startsWith('analytics') && key !== 'analyticsEvent') {
-                    const paramKey = key.replace('analytics', '').toLowerCase();
-                    params[paramKey] = target.dataset[key];
-                }
-            }
-            trackEvent(eventName, params);
-        });
+#hero .hero-content { max-width: 900px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 4rem; flex-wrap: wrap; }
+.hero-image { flex: 1; max-width: 300px; min-width: 250px; }
+.hero-image img { width: 100%; border-radius: 50%; box-shadow: 0 0 35px 5px rgba(201, 51, 51, 0.25); }
+.hero-text { flex: 1.5; text-align: left; min-width: 300px; }
+.hero-text h1 { font-family: var(--font-header); font-size: 5.5rem; font-weight: 900; color: var(--white-pure); line-height: 1.1; text-transform: lowercase; }
+.hero-text h1 span { color: var(--gold-urban); }
+.hero-text p { font-size: 1.2rem; margin: 0.5rem 0 2rem; color: #ccc; }
+.cta-button { background: var(--gold-urban); color: var(--black-deep); padding: 1rem 2.5rem; text-decoration: none; font-weight: 700; border-radius: 50px; display: inline-block; transition: transform 0.3s ease, box-shadow 0.3s ease; font-family: var(--font-header); }
+.cta-button:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(201, 51, 51, 0.2); }
+.hero-buttons { margin-bottom: 0rem; }
+.newsletter-prompt { font-size: 0.95rem; margin: 1.5rem 0; color: #999; font-family: var(--font-body); }
+.newsletter-prompt a { color: var(--white-pure); text-decoration: underline; text-decoration-color: var(--gold-urban); text-underline-offset: 4px; transition: color 0.3s ease; }
+.newsletter-prompt a:hover { color: var(--gold-urban); }
+.social-links { margin-top: 2rem; display: flex; gap: 1.8rem; }
+.social-links a { color: #aaa; font-size: 1.5rem; transition: color 0.3s ease, transform 0.3s ease; }
+.social-links a:hover { color: var(--white-pure); transform: translateY(-3px); }
 
-        document.querySelectorAll('[data-analytics-event="spotify_embed_interaction"]').forEach(iframe => {
-            let tracked = false;
-            const trackSpotify = () => {
-                if (tracked) return;
-                tracked = true;
-                trackEvent('spotify_embed_interaction', {
-                    embed_type: iframe.dataset.analyticsEmbedType || 'unknown'
-                });
-            };
-            iframe.addEventListener('focus', trackSpotify);
-            window.addEventListener('blur', () => {
-                if (document.activeElement === iframe) {
-                    trackSpotify();
-                }
-            });
-        });
-    }
+.scroll-down { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); color: rgba(255, 255, 255, 0.7); font-size: 1.8rem; text-decoration: none; animation: bounce 2.5s infinite; }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-25px); } 60% { transform: translateX(-50%) translateY(-15px); } }
 
-    // Lògica del Preloader
-    function runPreloader() {
-        const preloader = document.getElementById('preloader');
-        const textElement = document.getElementById('preloader-text');
-        if (!preloader || !textElement) return;
+#about { border-top: 1px solid var(--charcoal-grey); border-bottom: 1px solid var(--charcoal-grey); }
+.about-content { display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; }
+.about-text { flex: 1.5; min-width: 300px; }
+.about-text h2 { text-align: left; }
+.about-text p {
+    font-family: var(--font-body);
+    color: #ccc;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+.about-image { flex: 1; max-width: 350px; }
+.about-image img { width: 100%; border-radius: 12px; }
 
-        const textToType = "redmil, turn that shit on";
-        const typingSpeed = 50;
-        let charIndex = 0;
+.music-section { margin-bottom: 2rem; width: 100%; }
+.section-subtitle { font-family: var(--font-header); font-size: 1.8rem; color: var(--gold-urban); margin-bottom: 2rem; text-align: center; }
+.music-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 
-        function type() {
-            if (charIndex < textToType.length) {
-                textElement.innerHTML = textToType.substring(0, charIndex + 1) + '<span class="preloader-cursor">_</span>';
-                charIndex++;
-                setTimeout(type, typingSpeed);
-            } else {
-                textElement.innerHTML = textToType + '<span class="preloader-cursor">_</span>';
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    preloader.addEventListener('transitionend', () => {
-                        preloader.style.display = 'none';
-                        playBackgroundMusic();
-                    }, { once: true });
-                }, 1000);
-            }
-        }
-        type();
+#contact .contact-content { max-width: 700px; margin: 0 auto; text-align: center; }
+#contact h2 { color: var(--gold-urban); margin-bottom: 1.5rem; }
+.contact-intro { color: #ccc; line-height: 1.7; margin-bottom: 3.5rem; font-size: 1.1rem; }
+.contact-main-link {
+    background: var(--charcoal-grey);
+    border: 1px solid #2a2a2a;
+    border-radius: 15px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.contact-main-link:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(201, 51, 51, 0.1);
+}
+.contact-email-button {
+    background: var(--gold-urban);
+    color: var(--black-deep);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: transform 0.3s ease;
+    font-family: var(--font-header);
+    font-size: 1.2rem;
+}
+.contact-email-button:hover { transform: scale(1.05); }
+.contact-main-link p { margin-top: 1.5rem; color: #888; font-family: var(--font-body); }
+.contact-footer p { color: #aaa; margin-bottom: 1.5rem; }
+.contact-footer .social-links { justify-content: center; gap: 2rem; margin-top: 0; }
+.contact-footer .social-links a { font-size: 1.8rem; }
+
+.cta-divider {
+    min-height: auto;
+    background-color: var(--charcoal-grey);
+    padding: 6rem 2rem;
+    text-align: center;
+    border-top: 1px solid #2a2a2a;
+    border-bottom: 1px solid #2a2a2a;
+    position: relative;
+    overflow: hidden;
+}
+.cta-divider h3 { color: var(--gold-urban); margin-bottom: 1rem; }
+.cta-divider p { color: #ccc; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.cta-divider .cta-button i { margin-left: 0.5rem; }
+
+.image-marquee {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+.image-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.85);
+    z-index: 1;
+}
+.marquee-track {
+    display: flex;
+    width: calc(250px * 10);
+    animation: scroll-left 40s linear infinite;
+    height: 100%;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+}
+.marquee-track img {
+    width: 200px;
+    height: auto;
+    margin: 0 25px;
+    border-radius: 12px;
+    opacity: 0.2;
+    filter: grayscale(80%);
+}
+.cta-divider .container { position: relative; z-index: 3; }
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 5)); }
+}
+
+#newsletter-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 1002; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; }
+#newsletter-popup.visible { opacity: 1; pointer-events: all; }
+.popup-content { background: var(--charcoal-grey); border: 1px solid #2a2a2a; border-radius: 15px; padding: 3rem; max-width: 500px; width: 90%; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); position: relative; transform: scale(0.95); transition: transform 0.4s ease-in-out; }
+#newsletter-popup.visible .popup-content { transform: scale(1); }
+.popup-icon { font-size: 2.5rem; color: var(--gold-urban); margin-bottom: 1rem; }
+.popup-content h3 { font-size: 2rem; margin-bottom: 0.5rem; }
+.popup-content p { color: #aaa; line-height: 1.6; margin-bottom: 2rem; }
+.close-popup { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #888; font-size: 2rem; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; }
+.close-popup:hover { color: var(--white-pure); transform: scale(1.1); }
+
+footer {
+    background-color: #050505;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+}
+.footer-newsletter-link { margin-top: 1rem; }
+.footer-newsletter-link a { color: #ccc; text-decoration: underline; text-underline-offset: 3px; transition: color 0.3s ease; }
+.footer-newsletter-link a:hover { color: var(--gold-urban); }
+
+#scroll-to-top, #toggle-music-btn {
+    position: fixed;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 998;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out, background-color 0.3s ease, color 0.3s ease;
+}
+
+#scroll-to-top {
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--gold-urban);
+    color: var(--black-deep);
+    font-size: 1.4rem;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+#scroll-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+#scroll-to-top:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(201, 51, 51, 0.25);
+}
+
+#toggle-music-btn {
+    bottom: 30px;
+    left: 30px;
+    background-color: var(--charcoal-grey);
+    color: var(--white-pure);
+    font-size: 1.2rem;
+    border: 1px solid #333;
+}
+#toggle-music-btn:not(.is-muted):hover {
+    background-color: var(--gold-urban);
+    color: var(--black-deep);
+    transform: scale(1.1);
+}
+#toggle-music-btn.is-muted {
+    background-color: #bbbbbb;
+    color: var(--black-deep);
+}
+#toggle-music-btn.is-muted:hover {
+    background-color: var(--white-pure);
+    transform: scale(1.1);
+}
+
+.hamburger { display: none; cursor: pointer; }
+.hamburger div { width: 25px; height: 3px; background-color: var(--white-pure); margin: 5px; transition: all 0.3s ease; }
+.hamburger.toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+.hamburger.toggle .line2 { opacity: 0; }
+.hamburger.toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+
+@media (max-width: 768px) {
+    h2 { font-size: 2.2rem; }
+    h3 { font-size: 1.8rem; }
+    
+    .cursor-dot, .cursor-outline { display: none; }
+
+    #hero { padding: 7rem 1rem 6rem; }
+    
+    /* ===== CORRECCIÓ FINAL: Eliminar l'alçada mínima en seccions de contingut en mòbil ===== */
+    #about, #music, #contact, .cta-divider {
+        min-height: auto; /* Anul·la el 100vh general */
+        padding: 6rem 1rem;
     }
     
-    // Lògica per iniciar la música de fons
-    function playBackgroundMusic() {
-        const music = document.getElementById('background-music');
-        if (music) {
-            music.volume = 0.1;
-            const playPromise = music.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.warn("La reproducció automàtica de la música ha estat bloquejada pel navegador.");
-                    const musicBtn = document.getElementById('toggle-music-btn');
-                    if (musicBtn) {
-                        const icon = musicBtn.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('fa-volume-up');
-                            icon.classList.add('fa-volume-mute');
-                        }
-                        musicBtn.classList.add('is-muted');
-                    }
-                });
-            }
-        }
+    .hero-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem; 
     }
-
-    // Lògica del botó per activar/silenciar la música
-    function setupMusicToggle() {
-        const musicBtn = document.getElementById('toggle-music-btn');
-        const music = document.getElementById('background-music');
-        const icon = musicBtn ? musicBtn.querySelector('i') : null;
-
-        if (!musicBtn || !music || !icon) return;
-
-        musicBtn.addEventListener('click', () => {
-            const isMuted = music.muted || music.paused;
-            if (isMuted) {
-                music.play().then(() => {
-                    music.muted = false;
-                    trackEvent('toggle_music_click', { new_state: 'unmuted' });
-                }).catch(e => console.error("Error en reproduir la música", e));
-            } else {
-                music.muted = true;
-                trackEvent('toggle_music_click', { new_state: 'muted' });
-            }
-        });
-
-        function updateButtonState() {
-            if (music.muted || music.paused) {
-                icon.classList.remove('fa-volume-up');
-                icon.classList.add('fa-volume-mute');
-                musicBtn.title = "Activar Música";
-                musicBtn.classList.add('is-muted');
-            } else {
-                icon.classList.remove('fa-volume-mute');
-                icon.classList.add('fa-volume-up');
-                musicBtn.title = "Silenciar Música";
-                musicBtn.classList.remove('is-muted');
-            }
-        }
-
-        music.addEventListener('volumechange', updateButtonState);
-        music.addEventListener('play', updateButtonState);
-        music.addEventListener('pause', updateButtonState);
-        updateButtonState();
+    .hero-image {
+        max-width: 220px; 
+        min-width: 0;
+        order: 1;
     }
-
-    // Lògica d'Animacions en fer Scroll
-    function initScrollAnimations() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
-                    if (sectionId) {
-                        trackEvent('view_section', { section_id: `#${sectionId}` });
-                    }
-                    const animType = entry.target.getAttribute('data-anim') || 'fade-in-up';
-                    entry.target.classList.add(animType);
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        // CORRECCIÓ FINAL: El selector només ha d'observar elements amb la classe .reveal
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    .hero-text {
+        text-align: center;
+        order: 2;
+        width: 100%;
+        min-width: 0;
     }
-
-    // Lògica de la Capçalera Reactiva
-    function initReactiveHeader() {
-        const header = document.querySelector('header');
-        window.addEventListener('scroll', () => {
-            if (header) {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            }
-        });
+    .hero-text h1 {
+        font-size: 3rem; 
+        line-height: 1.2;
     }
-
-    // Lògica del Cursor Personalitzat
-    function initCustomCursor() {
-        const cursorDot = document.querySelector('.cursor-dot');
-        const cursorOutline = document.querySelector('.cursor-outline');
-        if (!cursorDot || !cursorOutline) return;
-
-        window.addEventListener('mousemove', (e) => {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
-            cursorOutline.style.left = `${e.clientX}px`;
-            cursorOutline.style.top = `${e.clientY}px`;
-        });
-        document.querySelectorAll('a, button').forEach(el => {
-            el.addEventListener('mouseover', () => cursorOutline.classList.add('grow'));
-            el.addEventListener('mouseleave', () => cursorOutline.classList.remove('grow'));
-        });
+    #hero .hero-text p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
+    .newsletter-prompt { margin-top: 1rem; }
+    .social-links { justify-content: center; margin-top: 1.5rem; }
+
+    .about-content { flex-direction: column; text-align: center; gap: 2.5rem; }
+    .about-text h2 { text-align: center; }
+    .about-image { display: none; }
+    .contact-intro { text-align: center; }
     
-    // Lògica del Botó de Tornar Amunt
-    function initScrollToTopButton() {
-        const button = document.getElementById('scroll-to-top');
-        if (!button) return;
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > window.innerHeight / 2) {
-                button.classList.add('visible');
-            } else {
-                button.classList.remove('visible');
-            }
-        });
-        button.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-
-    // LÒGICA POPUP DE NEWSLETTER
-    function initNewsletterPopup() {
-        const popup = document.getElementById('newsletter-popup');
-        if (!popup) return;
-        
-        const closeButton = popup.querySelector('.close-popup');
-        const ctaButton = popup.querySelector('#popup-cta-button');
-
-        setTimeout(() => {
-            popup.classList.add('visible');
-            trackEvent('view_newsletter_popup');
-        }, 12000);
-
-        const closePopup = () => {
-            popup.classList.remove('visible');
-        };
-
-        if (closeButton) closeButton.addEventListener('click', closePopup);
-        if (ctaButton) ctaButton.addEventListener('click', closePopup);
-    }
+    .nav-links { position: fixed; right: -100%; top: 0; height: 100vh; width: 70%; background: var(--charcoal-grey); flex-direction: column; align-items: center; justify-content: center; gap: 3rem; transition: right 0.4s ease-in-out; }
+    .nav-links.active { right: 0; }
+    .hamburger { display: block; z-index: 1001; }
     
-    // Lògica de Navegació Mòbil
-    function setupMobileNav() {
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        if (!hamburger || !navLinks) return;
-        
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.classList.toggle('toggle');
-        });
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    hamburger.classList.remove('toggle');
-                }
-            });
-        });
+    .popup-content { padding: 2.5rem 1.5rem; }
+    .popup-content h3 { font-size: 1.8rem; }
+    
+    #scroll-to-top, #toggle-music-btn { 
+        width: 45px; 
+        height: 45px; 
+        font-size: 1.2rem; 
+        bottom: 20px; 
     }
-
-    // Iniciar tot
-    init();
-});
+    #scroll-to-top { right: 20px; }
+    #toggle-music-btn { left: 20px; }
+}
