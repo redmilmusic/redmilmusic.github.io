@@ -48,14 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    // La reproducció automàtica ha estat bloquejada pel navegador.
                     console.warn("La reproducció automàtica de la música ha estat bloquejada pel navegador.");
-                    // Canviem la icona per indicar que està silenciat
                     const musicBtn = document.getElementById('toggle-music-btn');
                     const icon = musicBtn.querySelector('i');
                     if (icon) {
                         icon.classList.remove('fa-volume-up');
                         icon.classList.add('fa-volume-mute');
+                        musicBtn.classList.add('is-muted'); // Afegeix la classe si està bloquejat
                     }
                 });
             }
@@ -70,38 +69,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!musicBtn || !music || !icon) return;
 
-        music.muted = false; 
-
         musicBtn.addEventListener('click', () => {
-            if (music.paused) { 
-                music.play();
-                music.muted = false;
-            } else if (music.muted) { // Si està silenciat
-                music.muted = false;
-            } else { // Si està sonant
+            const isMuted = music.muted || music.paused;
+            if (isMuted) {
+                music.play().then(() => {
+                    music.muted = false;
+                }).catch(e => console.error("Error en reproduir la música", e));
+            } else {
                 music.muted = true;
             }
         });
 
-        // Actualitza la icona segons l'estat de la música
-        music.addEventListener('volumechange', () => {
-            if (music.muted || music.volume === 0) {
+        // Funció per actualitzar l'estat visual del botó
+        function updateButtonState() {
+             if (music.muted || music.paused) {
                 icon.classList.remove('fa-volume-up');
                 icon.classList.add('fa-volume-mute');
                 musicBtn.title = "Activar Música";
+                musicBtn.classList.add('is-muted'); // ===== CANVI AQUÍ: Afegeix la classe =====
             } else {
                 icon.classList.remove('fa-volume-mute');
                 icon.classList.add('fa-volume-up');
                 musicBtn.title = "Silenciar Música";
+                musicBtn.classList.remove('is-muted'); // ===== CANVI AQUÍ: Treu la classe =====
             }
-        });
-
-        // Cas inicial si la música ha estat bloquejada
-         if (music.paused) {
-            icon.classList.remove('fa-volume-up');
-            icon.classList.add('fa-volume-mute');
-            musicBtn.title = "Activar Música";
         }
+
+        // Escoltar canvis de volum/estat silenciat i de reproducció
+        music.addEventListener('volumechange', updateButtonState);
+        music.addEventListener('play', updateButtonState);
+        music.addEventListener('pause', updateButtonState);
+
+        // Comprovar l'estat inicial
+        updateButtonState();
     }
 
     // Lògica de Navegació Mòbil
@@ -187,15 +187,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctaButton = document.getElementById('popup-cta-button');
 
         setTimeout(() => {
-            popup.classList.add('visible');
+            if (popup) popup.classList.add('visible');
         }, 12000);
 
         const closePopup = () => {
-            popup.classList.remove('visible');
+            if (popup) popup.classList.remove('visible');
         };
 
-        closeButton.addEventListener('click', closePopup);
-        if(ctaButton) ctaButton.addEventListener('click', closePopup);
+        if (closeButton) closeButton.addEventListener('click', closePopup);
+        if (ctaButton) ctaButton.addEventListener('click', closePopup);
     }
 
     // Iniciar tot
